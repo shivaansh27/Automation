@@ -1,7 +1,7 @@
 {
   "Credentials": {
-    "Email": "shivanshsharma2704@gmail.com",
-    "Password": "Shivansh$4"
+    "Email": "masked_user@example.com",
+    "Password": "MASKED_PASSWORD"
   },
   "Search": {
     "Keyword": "Tops"
@@ -10,7 +10,7 @@
     "CreateUser": {
       "name": "qa_user",
       "email": "qa_user_${random}@gmail.com",
-      "password": "Shivansh$4",
+      "password": "MASKED_PASSWORD",
       "title": "Mr",
       "birth_date": "12",
       "birth_month": "01",

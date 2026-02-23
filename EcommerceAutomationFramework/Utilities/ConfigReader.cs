@@ -30,4 +30,24 @@ public static class ConfigReader
         var section = ConfigurationRoot.Value.GetSection(sectionName);
         return section.Exists() ? section.Get<T>() ?? new T() : new T();
     }
+
+    public static CredentialData GetCredentials()
+    {
+        var credentials = GetSection<CredentialData>("Credentials");
+
+        var envEmail = Environment.GetEnvironmentVariable("AUT_EMAIL");
+        var envPassword = Environment.GetEnvironmentVariable("AUT_PASSWORD");
+
+        if (!string.IsNullOrWhiteSpace(envEmail))
+        {
+            credentials.Email = envEmail.Trim();
+        }
+
+        if (!string.IsNullOrWhiteSpace(envPassword))
+        {
+            credentials.Password = envPassword;
+        }
+
+        return credentials;
+    }
 }

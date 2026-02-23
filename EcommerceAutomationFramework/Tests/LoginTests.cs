@@ -15,7 +15,7 @@ public class LoginTests : BaseTest
     [Retry(2)]
     public void User_Login_Should_Succeed()
     {
-        var credentials = ConfigReader.GetSection<CredentialData>("Credentials");
+        var credentials = ConfigReader.GetCredentials();
         var loginPage = new LoginPage(Driver);
 
         loginPage.Open(BaseUrl);
@@ -34,7 +34,7 @@ public class LoginTests : BaseTest
     [Retry(1)]
     public async Task Login_UI_Then_Validate_User_Via_API()
     {
-        var credentials = ConfigReader.GetSection<CredentialData>("Credentials");
+        var credentials = ConfigReader.GetCredentials();
         var config = ConfigReader.GetFrameworkConfig();
 
         var loginPage = new LoginPage(Driver);

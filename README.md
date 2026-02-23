@@ -161,6 +161,16 @@ dotnet restore
 dotnet test
 ```
 
+### Run with environment secrets (recommended)
+
+PowerShell:
+
+```powershell
+$env:AUT_EMAIL='your_registered_email@example.com'
+$env:AUT_PASSWORD='your_password'
+dotnet test
+```
+
 ### Run by browser
 
 PowerShell:
