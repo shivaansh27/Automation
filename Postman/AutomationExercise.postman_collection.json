@@ -1,0 +1,203 @@
+{
+  "info": {
+    "_postman_id": "0f7f5d24-8e84-4d66-ae83-c57f2f5d4f89",
+    "name": "AutomationExercise API Collection",
+    "description": "Postman evidence for core API flows used in hybrid framework.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://automationexercise.com/api"
+    },
+    {
+      "key": "email",
+      "value": "shivanshsharma2704@gmail.com"
+    },
+    {
+      "key": "password",
+      "value": "Shivansh$4"
+    }
+  ],
+  "item": [
+    {
+      "name": "Verify Login",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "email",
+              "value": "{{email}}",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "{{password}}",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/verifyLogin",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "verifyLogin"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get User Detail By Email",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/getUserDetailByEmail?email={{email}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "getUserDetailByEmail"
+          ],
+          "query": [
+            {
+              "key": "email",
+              "value": "{{email}}"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get Products List",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/productsList",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "productsList"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create User (Sample)",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": [
+            {
+              "key": "name",
+              "value": "qa_user",
+              "type": "text"
+            },
+            {
+              "key": "email",
+              "value": "qa_user_${random}@gmail.com",
+              "type": "text"
+            },
+            {
+              "key": "password",
+              "value": "Shivansh$4",
+              "type": "text"
+            },
+            {
+              "key": "title",
+              "value": "Mr",
+              "type": "text"
+            },
+            {
+              "key": "birth_date",
+              "value": "12",
+              "type": "text"
+            },
+            {
+              "key": "birth_month",
+              "value": "01",
+              "type": "text"
+            },
+            {
+              "key": "birth_year",
+              "value": "1995",
+              "type": "text"
+            },
+            {
+              "key": "firstname",
+              "value": "QA",
+              "type": "text"
+            },
+            {
+              "key": "lastname",
+              "value": "User",
+              "type": "text"
+            },
+            {
+              "key": "company",
+              "value": "Automation Inc",
+              "type": "text"
+            },
+            {
+              "key": "address1",
+              "value": "123 Main Street",
+              "type": "text"
+            },
+            {
+              "key": "address2",
+              "value": "Suite 10",
+              "type": "text"
+            },
+            {
+              "key": "country",
+              "value": "United States",
+              "type": "text"
+            },
+            {
+              "key": "zipcode",
+              "value": "10001",
+              "type": "text"
+            },
+            {
+              "key": "state",
+              "value": "NY",
+              "type": "text"
+            },
+            {
+              "key": "city",
+              "value": "New York",
+              "type": "text"
+            },
+            {
+              "key": "mobile_number",
+              "value": "1234567890",
+              "type": "text"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/createAccount",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "createAccount"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

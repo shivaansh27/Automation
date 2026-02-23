@@ -1,0 +1,51 @@
+name: UI and API Automation Tests
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  test:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chrome, edge]
+
+    env:
+      BROWSER: ${{ matrix.browser }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Test (${{ matrix.browser }})
+        run: dotnet test --logger "trx;LogFileName=test-results-${{ matrix.browser }}.trx"
+
+      - name: Upload test result trx
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: trx-${{ matrix.browser }}
+          path: |
+            **/*.trx
+
+      - name: Upload reports and logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts-${{ matrix.browser }}
+          path: |
+            **/Reports/**
+            **/Screenshots/**
+            **/Logs/**

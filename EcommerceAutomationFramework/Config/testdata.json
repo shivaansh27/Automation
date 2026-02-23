@@ -1,0 +1,30 @@
+{
+  "Credentials": {
+    "Email": "shivanshsharma2704@gmail.com",
+    "Password": "Shivansh$4"
+  },
+  "Search": {
+    "Keyword": "Tops"
+  },
+  "Users": {
+    "CreateUser": {
+      "name": "qa_user",
+      "email": "qa_user_${random}@gmail.com",
+      "password": "Shivansh$4",
+      "title": "Mr",
+      "birth_date": "12",
+      "birth_month": "01",
+      "birth_year": "1995",
+      "firstname": "QA",
+      "lastname": "User",
+      "company": "Automation Inc",
+      "address1": "123 Main Street",
+      "address2": "Suite 10",
+      "country": "United States",
+      "zipcode": "10001",
+      "state": "NY",
+      "city": "New York",
+      "mobile_number": "1234567890"
+    }
+  }
+}

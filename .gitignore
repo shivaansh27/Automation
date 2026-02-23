@@ -1,0 +1,36 @@
+# Build artifacts
+[Bb]in/
+[Oo]bj/
+out/
+
+# IDE
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Test and automation artifacts
+TestResults/
+Reports/
+Screenshots/
+Logs/
+*.trx
+
+# Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# NuGet
+*.nupkg
+*.snupkg
+
+# Local environment overrides (optional)
+.env
+.env.*
