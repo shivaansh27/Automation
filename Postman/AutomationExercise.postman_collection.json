@@ -12,11 +12,11 @@
     },
     {
       "key": "email",
-      "value": "shivanshsharma2704@gmail.com"
+      "value": "masked_user@example.com"
     },
     {
       "key": "password",
-      "value": "Shivansh$4"
+      "value": "MASKED_PASSWORD"
     }
   ],
   "item": [
@@ -112,7 +112,7 @@
             },
             {
               "key": "password",
-              "value": "Shivansh$4",
+              "value": "MASKED_PASSWORD",
               "type": "text"
             },
             {

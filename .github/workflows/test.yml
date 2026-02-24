@@ -16,6 +16,8 @@ jobs:
 
     env:
       BROWSER: ${{ matrix.browser }}
+      AUT_EMAIL: ${{ secrets.AUT_EMAIL }}
+      AUT_PASSWORD: ${{ secrets.AUT_PASSWORD }}
 
     steps:
       - name: Checkout
@@ -28,6 +30,13 @@ jobs:
 
       - name: Restore
         run: dotnet restore
+
+      - name: Validate required secrets
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:AUT_EMAIL) -or [string]::IsNullOrWhiteSpace($env:AUT_PASSWORD)) {
+            Write-Error "Missing required secrets: AUT_EMAIL and/or AUT_PASSWORD"
+          }
 
       - name: Test (${{ matrix.browser }})
         run: dotnet test --logger "trx;LogFileName=test-results-${{ matrix.browser }}.trx"

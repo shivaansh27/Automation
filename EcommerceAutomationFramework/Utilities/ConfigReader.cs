@@ -48,6 +48,16 @@ public static class ConfigReader
             credentials.Password = envPassword;
         }
 
+        if (string.IsNullOrWhiteSpace(credentials.Email)
+            || string.IsNullOrWhiteSpace(credentials.Password)
+            || credentials.Email.Contains("masked_", StringComparison.OrdinalIgnoreCase)
+            || credentials.Password.Equals("MASKED_PASSWORD", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                "Valid test credentials are not configured. Set AUT_EMAIL and AUT_PASSWORD environment variables (or GitHub secrets in CI)."
+            );
+        }
+
         return credentials;
     }
 }

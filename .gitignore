@@ -14,10 +14,11 @@ out/
 
 # Test and automation artifacts
 TestResults/
-Reports/
 Screenshots/
 Logs/
 *.trx
+!EcommerceAutomationFramework/Reports/
+!EcommerceAutomationFramework/Reports/*.cs
 
 # Rider / ReSharper
 _ReSharper*/
