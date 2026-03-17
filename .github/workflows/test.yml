@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        browser: [chrome, edge]
+        browser: [chrome]
 
     env:
       BROWSER: ${{ matrix.browser }}

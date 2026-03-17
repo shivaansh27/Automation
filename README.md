@@ -202,7 +202,7 @@ After execution:
 ## CI/CD
 
 GitHub Actions workflow: `.github/workflows/test.yml`
-- Matrix run on `chrome` and `edge`
+- CI run on `chrome` (stable hosted-runner path)
 - Executes `dotnet test`
 - Uploads:
   - TRX test results
