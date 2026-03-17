@@ -1,241 +1,78 @@
 # Ecommerce Hybrid Automation Framework (C# / .NET 8)
 
-Production-style QA Automation Framework for an e-commerce application using **Selenium + RestSharp + NUnit + Extent Reports** with a **hybrid UI + API** testing approach.
-
-> Built to demonstrate SDET/QA Engineer capabilities expected in modern product teams and campus hiring.
+A QA automation framework I built while preparing for SDET roles. Rather than writing basic Selenium scripts, I wanted to build something closer to how real teams actually structure their automation — with proper layering, reporting, and CI integration.
 
 ---
 
-## Recruiter Snapshot
+## What it covers
 
-- ? End-to-end framework in **C# (.NET 8)**
-- ? **UI Automation** with Selenium and Page Object Model (POM)
-- ? **API Automation** with RestSharp
-- ? **Hybrid Test** (UI login + API user validation)
-- ? **Parallel execution** + retry handling
-- ? **Extent Reports**, screenshot capture, and logging
-- ? **Environment-based configuration**
-- ? **Cross-browser support** (`chrome`, `edge`)
-- ? **GitHub Actions CI** with artifact publishing
-- ? Added QA artifacts: **Test Cases**, **RTM**, **Postman collection**
+The framework handles UI automation via Selenium, API testing with RestSharp, and a hybrid approach where both are used together in the same test flow. Tests run on Chrome and Edge, support parallel execution, and feed into Extent HTML reports with screenshots on failure.
+
+Built with C# (.NET 8), NUnit, and wired up to GitHub Actions for CI.
 
 ---
 
-## Tech Stack
+## How the code is organized
 
-- **Language:** C# 12
-- **Target Framework:** .NET 8
-- **Test Framework:** NUnit
-- **UI:** Selenium WebDriver
-- **API:** RestSharp
-- **Reporting:** Extent Reports (Spark)
-- **Config:** `appsettings.json` + `testdata.json`
-- **CI/CD:** GitHub Actions
+I went with a layered structure to keep things clean and avoid test code turning into a mess:
 
----
+- `Pages` — UI interactions following the Page Object Model
+- `API` — API clients and endpoint definitions
+- `Models` — request/response data shapes
+- `Utilities` — shared helpers for driver setup, waits, config, and logging
+- `Tests` — the actual test scenarios
+- `Docs / Postman` — QA artifacts like test cases, RTM, and a Postman collection
 
-## Framework Architecture
-
-- Page Object Model (POM) for maintainability
-- Layered separation:
-  - `Pages` for UI actions
-  - `API` for endpoint clients
-  - `Models` for typed data
-  - `Utilities` for reusable framework services
-  - `Tests` for scenarios
-- Thread-safe driver/report handling for parallel runs
-
----
-
-## Project Structure
-
-```text
+```
 EcommerceAutomationFramework/
-??? API/
-?   ??? BaseApiClient.cs
-?   ??? ProductApi.cs
-?   ??? UserApi.cs
-??? Config/
-?   ??? appsettings.json
-?   ??? testdata.json
-??? Models/
-?   ??? ConfigModels.cs
-?   ??? ProductModel.cs
-?   ??? UserModel.cs
-??? Pages/
-?   ??? BasePage.cs
-?   ??? CartPage.cs
-?   ??? HomePage.cs
-?   ??? LoginPage.cs
-?   ??? ProductPage.cs
-??? Properties/
-?   ??? AssemblyInfo.cs
-??? Reports/
-?   ??? ExtentReportManager.cs
-??? Tests/
-?   ??? BaseTest.cs
-?   ??? CheckoutTests.cs
-?   ??? LoginTests.cs
-?   ??? ProductTests.cs
-??? Utilities/
-?   ??? ConfigReader.cs
-?   ??? DriverFactory.cs
-?   ??? Logger.cs
-?   ??? ScreenshotHelper.cs
-?   ??? TestDataHelper.cs
-?   ??? WaitHelper.cs
-??? Docs/
-?   ??? RTM.md
-?   ??? TestCases.md
-??? Postman/
-?   ??? AutomationExercise.postman_collection.json
-??? README.md
+├── API/
+├── Config/
+├── Models/
+├── Pages/
+├── Reports/
+├── Tests/
+├── Utilities/
+├── Docs/
+├── Postman/
+└── README.md
 ```
 
 ---
 
-## Test Coverage
+## Test coverage
 
-### UI Tests
-- User Login
-- Product Search
-- Add to Cart
-- Checkout Flow continuation
+**UI** — login, product search, add to cart, basic checkout flow
 
-### API Tests
-- Create User (`POST /createAccount`)
-- Verify Login (`POST /verifyLogin`)
-- Get User Detail (`GET /getUserDetailByEmail`)
-- Get Product List (`GET /productsList`)
+**API** — create user, verify login, get user details, get product list
 
-### Hybrid Test
-- `Login_UI_Then_Validate_User_Via_API`
-  1. Login via UI
-  2. Capture/confirm user context
-  3. Validate user via API
-  4. Assert response status and data consistency
+**Hybrid** — `Login_UI_Then_Validate_User_Via_API`
+
+This one was the most interesting to build. The flow logs in through the browser, captures the user's email, hits the API to fetch that user's details, then cross-validates the response against what the UI showed. The idea was to demonstrate how UI and API can work together for richer validation rather than testing them in isolation.
 
 ---
 
-## Advanced Framework Features
+## Other things I added
 
-- Parallel test execution
-- Retry for flaky tests
-- Extent report generation
-- Screenshot on failure
-- File logging (`Logs/`)
-- Environment-based configuration (`dev/staging`)
-- Cross-browser execution through config/env (`chrome`, `edge`)
-- Runtime-unique email generation for create-user flows to avoid duplicate account failures
+- Retry logic for flaky tests
+- Screenshot capture on failure
+- Config-based environment switching (`dev` / `staging`)
+- Dynamic email generation to prevent duplicate user conflicts
+- Basic logging under `Logs/`
 
 ---
 
 ## Configuration
 
-### `Config/appsettings.json`
-- `Environment`
-- `TimeoutSeconds`
-- `Browser`
-- `Api.BaseUrl`
-- Environment URLs (`dev`, `staging`)
-
-### `Config/testdata.json`
-- Login credentials
-- Search keyword
-- User payload for API create-user
-
-> Security note: do not commit real credentials in public repositories. Use environment secrets for CI.
+`appsettings.json` controls environment, browser, base URL, and timeouts. `testdata.json` holds login credentials, search keywords, and the API user payload. Real credentials aren't committed — the config supports environment variables for that.
 
 ---
 
-## How to Run
+## Running it locally
 
-### Prerequisites
-- .NET 8 SDK
-- Chrome and/or Edge installed
-
-### Local
-
-```bash
-dotnet restore
-dotnet test
-```
-
-### Run with environment secrets (recommended)
-
-PowerShell:
-
-```powershell
-$env:AUT_EMAIL='your_registered_email@example.com'
-$env:AUT_PASSWORD='your_password'
-dotnet test
-```
-
-### Run by browser
-
-PowerShell:
-
-```powershell
-$env:BROWSER='chrome'; dotnet test
-$env:BROWSER='edge'; dotnet test
-```
-
-### Run specific suite
-
-```bash
-dotnet test --filter "FullyQualifiedName~LoginTests"
-dotnet test --filter "FullyQualifiedName~ProductTests"
-dotnet test --filter "FullyQualifiedName~CheckoutTests"
-```
+You'll need .NET 8 SDK and Chrome or Edge installed, then just run the NUnit tests through your preferred runner or via the CLI.
 
 ---
 
-## Reports & Artifacts
+## Test site
 
-After execution:
-- `Reports/` ? Extent HTML report
-- `Screenshots/` ? failure screenshots
-- `Logs/` ? execution logs
-
----
-
-## CI/CD
-
-GitHub Actions workflow: `.github/workflows/test.yml`
-- CI run on `chrome` (stable hosted-runner path)
-- Executes `dotnet test`
-- Uploads:
-  - TRX test results
-  - Reports, Screenshots, Logs
-
----
-
-## QA Documentation Added
-
-- Manual test design: `Docs/TestCases.md`
-- Requirement traceability: `Docs/RTM.md`
-- Postman API evidence: `Postman/AutomationExercise.postman_collection.json`
-
----
-
-## Why this project is recruiter-relevant
-
-This repository demonstrates practical skills expected for QA/SDET roles:
-- Test framework design and scalability
-- Automation coding standards (POM, reusable utilities)
-- Hybrid UI/API validation approach
-- Failure analysis and reporting
-- CI readiness and team collaboration artifacts (RTM/manual test docs)
-
----
-
-## Public Test Site
-
-- Web: `https://automationexercise.com`
-- API: `https://automationexercise.com/api`
-
----
-
-## Author
-
-If you are evaluating this project for QA/SDET hiring, feel free to review the framework structure, test strategy, and CI artifacts for production-readiness indicators.
+[automationexercise.com](https://automationexercise.com) + its [API](https://automationexercise.com/api)
