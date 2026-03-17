@@ -1,6 +1,6 @@
 # Ecommerce Hybrid Automation Framework (C# / .NET 8)
 
-A QA automation framework I built while preparing for SDET roles. Rather than writing basic Selenium scripts, I wanted to build something closer to how real teams actually structure their automation — with proper layering, reporting, and CI integration.
+A QA automation framework I built.
 
 ---
 
