@@ -18,14 +18,7 @@ public class LoginTests : BaseTest
         var credentials = ConfigReader.GetCredentials();
         var loginPage = new LoginPage(Driver);
 
-        loginPage.Open(BaseUrl);
-        loginPage.Login(credentials.Email, credentials.Password);
-
-        if (!loginPage.IsLoggedIn())
-        {
-            loginPage.Open(BaseUrl);
-            loginPage.Login(credentials.Email, credentials.Password);
-        }
+        EnsureUiLogin(loginPage, credentials.Email, credentials.Password);
 
         Assert.That(loginPage.IsLoggedIn(), Is.True, $"Login failed: {loginPage.GetLoginErrorMessage()} | Url: {Driver.Url}");
     }
@@ -38,14 +31,7 @@ public class LoginTests : BaseTest
         var config = ConfigReader.GetFrameworkConfig();
 
         var loginPage = new LoginPage(Driver);
-        loginPage.Open(BaseUrl);
-        loginPage.Login(credentials.Email, credentials.Password);
-
-        if (!loginPage.IsLoggedIn())
-        {
-            loginPage.Open(BaseUrl);
-            loginPage.Login(credentials.Email, credentials.Password);
-        }
+        EnsureUiLogin(loginPage, credentials.Email, credentials.Password);
 
         Assert.That(
             loginPage.IsLoggedIn(),
@@ -64,5 +50,22 @@ public class LoginTests : BaseTest
             Assert.That(userDetails!.email, Is.EqualTo(credentials.Email), "Email mismatch between UI and API.");
             Assert.That(userLabel.ToLowerInvariant(), Does.Contain((userDetails.name ?? string.Empty).ToLowerInvariant()).Or.Contain("logged in as"), "User data mismatch.");
         });
+    }
+
+    private void EnsureUiLogin(LoginPage loginPage, string email, string password)
+    {
+        for (var attempt = 1; attempt <= 3; attempt++)
+        {
+            loginPage.Open(BaseUrl);
+            loginPage.Login(email, password);
+
+            if (loginPage.IsLoggedIn())
+            {
+                return;
+            }
+
+            Driver.Manage().Cookies.DeleteAllCookies();
+            Thread.Sleep(1000);
+        }
     }
 }
